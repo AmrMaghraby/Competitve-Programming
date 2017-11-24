@@ -1,3 +1,6 @@
+/*
+ IDEA : sort the values of nodes then remove the nodes from biggest to smallest as removing max ium element will always bring smallest result
+*/
 #include<bits/stdc++.h>
 using namespace std;
 vector< pair<int ,int > >vec;
