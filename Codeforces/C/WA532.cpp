@@ -2,6 +2,7 @@
  #include<bits/stdc++.h>
  using namespace std;
  vector<int>ans,ans3;
+
  long long cnt[1000003];
  short flag;
  long long ans2;
