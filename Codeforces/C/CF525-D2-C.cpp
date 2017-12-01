@@ -1,3 +1,4 @@
+///WA solution
 ///IN THE NAME OF ALLAH
  #include<bits/stdc++.h>
  using namespace std;
