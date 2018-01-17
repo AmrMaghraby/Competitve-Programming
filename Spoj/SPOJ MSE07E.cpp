@@ -1,4 +1,4 @@
- ///IN THE NAME OF ALLAH
+///IN THE NAME OF ALLAH
  #include<bits/stdc++.h>
  using namespace std;
  int X[1000005],Y[1000005],Z[1000005],n;
@@ -49,14 +49,21 @@
         continue;
     }
     long long L=0,H=10000000;
-    while(L<H){
+    while(H-L>=1){
         long long m = 1LL*(H+L)/2;
         if(getSum(m)%2==0)
            L=m+1;
         else
            H=m;
     }
-    cout<<L<<" "<<getSum(L)-getSum(L-1)<<endl;
+    int cnt = 0;
+	for(int i=0; i<n; i++){
+		if(X[i] <= L && L <= Y[i] && (L - X[i])%Z[i] == 0){
+			cnt++;
+		}
+	}
+    cout<<L<<" "<<cnt<<endl;
 
   }
  }
+
