@@ -4,7 +4,7 @@
  struct Point{
     int x, y;
  };
- long long sqr(int X){
+ double sqr(double X){
    return 1LL*X*X;
  }
  vector<Point>vec;
@@ -29,16 +29,17 @@
     }
     return false;
  }
+ double T,TT;
  bool isRec(int x1,int y1,int x2,int y2,int x3,int y3,int x4,int y4){
   double cx,cy;
-  int dd1,dd2,dd3,dd4;
-  cx=(x1+x2+x3+x4)/4;
-  cy=(y1+y2+y3+y4)/4;
+  double dd1,dd2,dd3,dd4;
+  T=cx=(x1+x2+x3+x4)/4.0;
+  TT=cy=(y1+y2+y3+y4)/4.0;
   dd1=sqr(cx-x1)+sqr(cy-y1);
   dd2=sqr(cx-x2)+sqr(cy-y2);
   dd3=sqr(cx-x3)+sqr(cy-y3);
   dd4=sqr(cx-x4)+sqr(cy-y4);
-  return dd1==dd2 && dd1==dd3 && dd1==dd4;
+  return abs(dd1-dd2) < 1e-7 && abs(dd1-dd3)<1e-7 && abs(dd1-dd4)<1e-7;
  }
  int main() {
 
