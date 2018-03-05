@@ -1,0 +1,30 @@
+ ///IN THE NAME OF ALLAH
+ #include<bits/stdc++.h>
+ #define MOD 1000000000
+ using namespace std;
+ string str;
+ long long mem[305][305];
+ long long Play(int l,int R){
+   if(l==R)return 1;
+   long long &ret = mem[l][R];
+   if(ret!=-1) return ret;
+   if(str[l]!=str[R]) return 0;
+   long long ans=0;
+   for(int k=l+2;k<=R;k++){
+     if(str[l]==str[k])
+       ans = (ans%MOD)+(Play(l+1,k-1)*Play(k,R))%MOD;
+     }
+   return ret=(ans%MOD);
+ }
+ int main(){
+
+   while(cin >> str){
+
+     memset(mem,-1,sizeof(mem));
+     cout<<Play(0,str.size()-1)<<endl;
+
+   }
+ }
+
+
+
