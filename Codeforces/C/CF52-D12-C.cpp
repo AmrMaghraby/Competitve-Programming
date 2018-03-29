@@ -34,6 +34,7 @@
   ll mid=(s+e)/2;
   ll a=query(s,mid,p*2,from,to);
   ll b=query(mid+1,e,p*2+1,from,to);
+  
   return min(a,b)+lazy[p];
  }
  int main(){
