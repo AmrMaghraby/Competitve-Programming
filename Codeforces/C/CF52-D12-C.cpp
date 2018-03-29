@@ -1,68 +1,48 @@
+
+ ///IN THE NAME OF ALLAH
  #include<bits/stdc++.h>
+ #define ll long long
  using namespace std;
- long long s[400001],lazy[400001],Arr[400000];
+ long long seg[200005*5],lazy[200005*5],Arr[200005*5];
  vector<int> v;
  void Build(int id,int l ,int r){
    if(l==r){
-      s[id]=Arr[l];
+      seg[id]=Arr[l];
     return ;
    }
    int mid = (l+r)/2;
    Build(id*2,l,mid);
    Build(id*2+1,mid+1,r);
-   s[id] = min(s[2*id] , s[2*id+1]);
+   seg[id] = min(seg[2*id] , seg[2*id+1]);
    return ;
  }
- void update(int x,int y,int id,int l ,int r){
-   if(x > r || y < l) return ;
-   if(x<=l && y>=r){
-    lazy[id]+=v[2];
-    s[id]+=lazy[id];
-    if(l!=r){
-     lazy[2*id]+=lazy[id];
-     lazy[2*id+1]+=lazy[id];
-    }
-    lazy[id]=0;
-    return ;
-   }
-    int mid = (l+r)/2;
-    update(x,y,2*id,l,mid);
-    update(x,y,2*id+1,mid+1,r);
-    s[id]=min(s[id*2],s[id*2+1]);
-    return ;
- }
- long long Query(int x,int y,int id ,int l,int r){
-  if( x > r || y < l ) return 1e9;
-  if(lazy[id]){
-    s[id]+=lazy[id];
-    if(l!=r){
-     lazy[2*id]+=lazy[id];
-     lazy[2*id+1]+=lazy[id];
-    }
-    lazy[id]=0;
+ void update(ll s,ll e,ll p,ll from,ll to){
+  if(from<=s&&e<=to){
+   lazy[p]+=v[2];
+   return;
   }
-  if( x<=l && y>=r ) return s[id];
-  int mid = (l+r)/2;
-  return min(Query(x,y,2*id,l,mid),Query(x,y,2*id+1,mid+1,r));
+  if(s>to||e<from)return;
+  ll mid=(s+e)/2;
+  update(s,mid,p*2,from,to);
+  update(mid+1,e,p*2+1,from,to);
+  seg[p]=min(seg[p*2]+lazy[p*2],seg[p*2+1]+lazy[p*2+1]);
  }
- void Print(int l,int r,int id){
-   if(l==r){
-    cout<<l<<" "<<r<<" "<<Arr[l]<<" "<<s[id]<<" "<<id<<endl;
-    return ;
-   }
-   int mid=(l+r)/2;
-   Print(l,mid,id*2);
-   Print(mid+1,r,id*2+1);
-    cout<<l<<" "<<r<<" "<<Arr[l]<<" "<<s[id]<<" "<<id<<endl;
-   return ;
+ ll query(ll s,ll e,ll p,ll from,ll to){
+  if(s>to||e<from) return 1e9;
+  if(s==e)return seg[p]+lazy[p];
+  if(from<=s&&e<=to) return seg[p]+lazy[p];
+  ll mid=(s+e)/2;
+  ll a=query(s,mid,p*2,from,to);
+  ll b=query(mid+1,e,p*2+1,from,to);
+  return min(a,b)+lazy[p];
  }
  int main(){
      int n ,m,tc;
      scanf("%d",&n);
      for(int i=1;i<=n;i++)
-       scanf("%d",&Arr[i]);
-     Build(1,1,n);
-     cin>>m;
+       scanf("%lld",&Arr[i]);
+      Build(1,1,n);
+     cin >> m;
      cin.ignore();
      for(int i=0;i<m;i++){
         string str;
@@ -72,17 +52,17 @@
         int x;
         while(iss>>x) v.push_back(x);
         if(v.size()==3) {
-          if(v[0]<=v[1]) update(v[0]+1,v[1]+1,1,1,n);
+          if(v[0]<=v[1]) update(1,n,1,v[0]+1,v[1]+1);
           else {
-            update(1,v[1]+1,1,1,n);
-            update(v[1]+1,n,1,1,n);
+            update(1,n,1,1,v[1]+1);
+            update(1,n,1,v[0]+1,n);
           }
         }else {
-                if(v[0]<=v[1]) printf("%d\n",Query(v[0]+1,v[1]+1,1,1,n));
-                else printf("%d\n",min(Query(1,v[1]+1,1,1,n),Query(v[1]+1,n,1,1,n)));
+                if(v[0]<=v[1]) printf("%lld\n",query(1,n,1,v[0]+1,v[1]+1));
+                else printf("%lld\n",min(query(1,n,1,1,v[1]+1),query(1,n,1,v[0]+1,n)));
         }
-        cout<<"========================================="<<endl;
-        Print(1,n,1);
-        cout<<"========================================="<<endl;
-    }
-  }
+     }
+ }
+
+
+
