@@ -1,4 +1,6 @@
-
+/*
+ IDEA : is cayley Thereom the problem is asking about numbre of unique trees which is N^(n-2) cayley therom
+*/
 #include <cstdio>
 
 #define i64 long long
