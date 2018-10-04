@@ -1,5 +1,8 @@
 // UVa 10944 - Nuts for nuts..
 // DP with bitmask
+// Idea : 1) calculate shortest path between all points through dist() function
+// 2) after that connect each edge with anther edge (shortest point to it)
+// In shot Words calculate Cost(dist) + TSP
 
 #include <iostream>
 #include <string>
